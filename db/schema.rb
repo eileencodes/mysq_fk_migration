@@ -10,13 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160616200903) do
+ActiveRecord::Schema.define(version: 20160616201137) do
 
   create_table "accounts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer  "owner_id"
+    t.index ["owner_id"], name: "fk_rails_37ced7af95", using: :btree
   end
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -24,6 +25,9 @@ ActiveRecord::Schema.define(version: 20160616200903) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer  "account_id"
+    t.index ["account_id"], name: "fk_rails_61ac11da2b", using: :btree
   end
 
+  add_foreign_key "accounts", "users", column: "owner_id"
+  add_foreign_key "users", "accounts"
 end
